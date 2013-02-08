@@ -120,8 +120,28 @@ text-indent: 0;
 	font-size: 40px;
 }
 
+#count {
+	color: red;
+}
+
+.input {
+	font-size: 18px;
+}
+
 #cap {
 	margin-left: 160px;
+}
+
+#cdiv{
+	margin-top: 10px;
+	margin-left: 150px;
+	font-size: 20px;
+}
+
+#count {
+	margin-top: 15px;
+	margin-left: 140px;
+	font-size: 30px;
 }
 
 #du {

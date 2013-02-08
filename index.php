@@ -110,7 +110,7 @@ function getClientIP( $test = "off" )
 				}
 			?>
 				<form method="post" action="index.php" name="main_form">
-				<textarea name="input" rows="20" cols="75" autofocused required></textarea>
+				<textarea name="input" class="input" rows="20" cols="55" autofocused required></textarea>
 				<br/><br/>
 			<?php
           			require_once('recaptchalib.php');
@@ -161,23 +161,23 @@ function getClientIP( $test = "off" )
     						$sql = "UPDATE ".DB_TABLE_NAME." SET `seen` = 1 WHERE `id` = '$target';";
     						$result = mysql_query( $sql, $DB_link );
     						echo "<script>
-    							var t = 10;
+    							var t = 15;
 
     							var func = function() {
-    								if( t <= 0 )
-    								{
-    									document.URL=location.href;
-    								}
+    								if( t <= 0 ) location.reload();
     								$('#count').html(t);
-    								t--;
+    								t-=1;
+    								setTimeout( 'func();', 1000 );
     							}
 
-    							setTimeout( func, 1000 );
+    							$(document).ready(function(){
+    								setTimeout( 'func();', 1000 );
+    							});
 
     							</script>";
     						echo "<h2>You have a secret message</h2>";
-    						echo "<textarea name=\"display\" rows=\"20\" cols=\"75\">$data->message</textarea>";
-    						echo "<h2>This message will self destruct in <div id=\"count\"></div> second.</h2>";
+    						echo "<textarea name=\"display\" class=\"input\" rows=\"20\" cols=\"55\">$data->message</textarea>";
+    						echo "<div id=\"cdiv\">This message will self destruct in <div id=\"count\">15</div></div>";
     					}
     					else
     					{
