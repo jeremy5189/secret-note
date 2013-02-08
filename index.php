@@ -1,5 +1,5 @@
 <?php
-	
+
 	date_default_timezone_set("Asia/Taipei");
 
 	include('config.php');
@@ -77,6 +77,16 @@ function getClientIP( $test = "off" )
 <meta name="description" content="Classified Message Service, 提供機密訊息閱後銷毀服務" />
 <script type="text/javascript" src="jquery-1.9.0.min.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css" />
+<script type="text/javascript">
+ var RecaptchaOptions = {
+    theme : 'white'
+ };
+$(document).ready( function() {
+	$('#du').click( function() {
+		this.select();
+	});
+});
+ </script>
 </head>
 
 <body>
@@ -102,22 +112,22 @@ function getClientIP( $test = "off" )
 				if( $act == "normal" )
 				{
 			?>
-				<h2>Enter your classified message</h2>
+				<h2>Enter your message</h2>
 			<?php
 				if( $error )
 				{
-					echo "<div id=\"warn\">Wrong Captcha, Please Try Again.</div>";
+					echo "<div id=\"warn\">Wrong Verify Code, Please Try Again.</div>";
 				}
 			?>
 				<form method="post" action="index.php" name="main_form">
-				<textarea name="input" class="input" rows="20" cols="55" autofocused required></textarea>
+				<textarea name="input" class="input" rows="15" cols="55" autofocused required></textarea>
 				<br/><br/>
 			<?php
           			require_once('recaptchalib.php');
           			$publickey = "6LfFstwSAAAAAAlAE78m-OEy3EFwPtI4hW_aGmdY"; // you got this from the signup page
           			echo "<div id=\"cap\">".recaptcha_get_html($publickey)."</div>";
         	?>
-				<input type="submit" class="btn" value="Submit">
+				<input type="submit" class="btn" value="Save">
 				<input type="hidden" name="flag" value="true">
 				</form>
 			<?php
@@ -129,7 +139,7 @@ function getClientIP( $test = "off" )
 						echo "<h2>Your Message Was Saved!</h2>";
 						echo "<p>Please copy the link below, 
 							whoever enters this link will see your message.
-							After that, your message will self destruct in 10 seconds. 
+							After that, your message will self destruct in 15 seconds. 
 							The next visitor won't be able to see it.</p>";
 						echo "<input type=\"text\" id=\"du\" value=\"$url\">";
 					}
@@ -175,19 +185,19 @@ function getClientIP( $test = "off" )
     							});
 
     							</script>";
-    						echo "<h2>You have a secret message</h2>";
-    						echo "<textarea name=\"display\" class=\"input\" rows=\"20\" cols=\"55\">$data->message</textarea>";
+    						echo "<h2>You have a message</h2>";
+    						echo "<textarea name=\"display\" class=\"input\" rows=\"15\" cols=\"55\">$data->message</textarea>";
     						echo "<div id=\"cdiv\">This message will self destruct in <div id=\"count\">15</div></div>";
     					}
     					else
     					{
-    						echo "<h2>404 - Not Found</h2>";
+    						echo "<h2>Not Found</h2>";
     						echo "<p>The request message either doesn't exist or has already been destructed.</p>";
     					}
     				}
     				else
     				{
-    					echo "<h2>404 - Not Found</h2>";
+    					echo "<h2>Not Found</h2>";
     					echo "<p>The request message #$target either doesn't exist or already been destructed.</p>";
     				}
     				mysql_close($DB_link);
@@ -201,7 +211,7 @@ function getClientIP( $test = "off" )
 </div>
 
 <div id="footer">
-<p>&copy; 2006 Your or your company name | Design by <a href="http://spacer.zoxt.net">Mike Yarmish</a></p>
+<p>Copyright &copy; 2013 <a href="http://blog.ssinrc.org">SSInRC</a> & <a href="http://jeremy.ssinrc.org">Jeremy Yen</a></p>
 </div>
 </body>
 </html>
