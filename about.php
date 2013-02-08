@@ -1,4 +1,5 @@
 
+<?php include('config.php'); ?>
 <!DOCTYPE>
 <html>
 <head>
@@ -36,7 +37,7 @@
 			<h2>說明</h2>
 			<p>Classified Message Service， 機密訊息服務， 簡稱CMS，提供訊息讀後銷毀服務．
 				使用者可將自訂訊息輸入後，將產生的網站以電子郵件或即時訊息傳給收訊人，
-				當收訊人開啓該連結後，會看到使用者輸入的訊息，但15秒後，該訊息將自動銷毀．</p>
+				當收訊人開啓該連結後，會看到使用者輸入的訊息，但<?php echo $countdown_sec; ?>秒後，該訊息將自動銷毀．</p>
 			</div>
 			<div class="post">
 			<h2>聲明</h2>

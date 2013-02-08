@@ -138,7 +138,7 @@ $(document).ready( function() {
 						echo "<h2>Your Message Was Saved!</h2>";
 						echo "<p>Please copy the link below, 
 							whoever enters this link will see your message.
-							After that, your message will self destruct in 15 seconds. 
+							After that, your message will self destruct in $countdown_sec seconds. 
 							The next visitor won't be able to see it.</p>";
 						echo "<input type=\"text\" id=\"du\" value=\"$url\">";
 					}
@@ -170,7 +170,7 @@ $(document).ready( function() {
     						$sql = "UPDATE ".DB_TABLE_NAME." SET `seen` = 1 WHERE `id` = '$target';";
     						$result = mysql_query( $sql, $DB_link );
     						echo "<script>
-    							var t = 15;
+    							var t = $countdown_sec;
 
     							var func = function() {
     								if( t <= 0 ) location.reload();
@@ -186,7 +186,7 @@ $(document).ready( function() {
     							</script>";
     						echo "<h2>You have a message</h2>";
     						echo "<textarea name=\"display\" class=\"input\" rows=\"15\" cols=\"55\">$data->message</textarea>";
-    						echo "<div id=\"cdiv\">This message will self destruct in <div id=\"count\">15</div></div>";
+    						echo "<div id=\"cdiv\">This message will self destruct in <div id=\"count\">$countdown_sec</div></div>";
     					}
     					else
     					{

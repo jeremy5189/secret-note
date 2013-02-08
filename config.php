@@ -8,4 +8,6 @@ define( "DB_TABLE_NAME", "data_cms");
 
 $publickey = "6LfFstwSAAAAAAlAE78m-OEy3EFwPtI4hW_aGmdY";
 $privatekey = "6LfFstwSAAAAAHmlijyL6D8KDS6SlvrHTElrD34i";
+
+$countdown_sec = "30";
 ?>
