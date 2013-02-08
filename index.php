@@ -120,7 +120,8 @@ $(document).ready( function() {
 			?>
 				<form method="post" action="index.php" name="main_form">
 				<textarea name="input" class="input" rows="15" cols="55" autofocused required></textarea>
-				<br/><br/>
+				<p id="note">Please read our <a href="about.php">policy</a> before continuing. More setting in next page.</p>
+				<br/>
 			<?php
           			require_once('recaptchalib.php');
           			echo "<div id=\"cap\">".recaptcha_get_html($publickey,null,true)."</div>";

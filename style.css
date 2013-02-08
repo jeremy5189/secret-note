@@ -124,6 +124,10 @@ text-indent: 0;
 	color: red;
 }
 
+#note {
+	margin-left: 20px;
+}
+
 .input {
 	font-size: 18px;
 }
