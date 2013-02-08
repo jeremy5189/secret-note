@@ -8,7 +8,6 @@
 	if( isset($_POST['flag']) && $_POST['flag'] == 'true' )
 	{
 		require_once('recaptchalib.php');
-		$privatekey = "6LfFstwSAAAAAHmlijyL6D8KDS6SlvrHTElrD34i";
 		$resp = recaptcha_check_answer ($privatekey,
 	                                    $_SERVER["REMOTE_ADDR"],
 	                                    $_POST["recaptcha_challenge_field"],
@@ -124,8 +123,7 @@ $(document).ready( function() {
 				<br/><br/>
 			<?php
           			require_once('recaptchalib.php');
-          			$publickey = "6LfFstwSAAAAAAlAE78m-OEy3EFwPtI4hW_aGmdY"; // you got this from the signup page
-          			echo "<div id=\"cap\">".recaptcha_get_html($publickey)."</div>";
+          			echo "<div id=\"cap\">".recaptcha_get_html($publickey,null,true)."</div>";
         	?>
 				<input type="submit" class="btn" value="Save">
 				<input type="hidden" name="flag" value="true">
