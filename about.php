@@ -43,9 +43,9 @@
 			<h2>聲明</h2>
 			<p>本服務<b>不保證</b>使用者輸入之訊息<b>不會</b>被第三人(包括不法監聽者等)取得，亦<b>不負</b>任何賠償責任．
 				對於已自毀之訊息，使用者不得要求使其回復．若使用者不同意上述條款，請勿將資料輸入至本服務．</p>
-			<p>We do not guarantee the security of your message, neither do we take any responsibility. 
-				For message which has been self destructed, users can not ask to retrieve it. 
-				If you don't accept our policy, please input no message to our website. </p>
+			<p>Neither we do guarantee the security of your messages nor take any responsibilities. 
+				After being self-destructed, messages can not be retrieved by anyone. 
+				If you don't accept our policy, please input no messages to our website.</p>
 			</div>
 
 			<div class="post">

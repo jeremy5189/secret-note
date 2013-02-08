@@ -186,12 +186,12 @@ $(document).ready( function() {
     							</script>";
     						echo "<h2>You have a message</h2>";
     						echo "<textarea name=\"display\" class=\"input\" rows=\"15\" cols=\"55\">$data->message</textarea>";
-    						echo "<div id=\"cdiv\">This message will self destruct in <div id=\"count\">$countdown_sec</div></div>";
+    						echo "<div id=\"cdiv\">This message will be self-destructed after <div id=\"count\">$countdown_sec</div></div>";
     					}
     					else
     					{
     						echo "<h2>Not Found</h2>";
-    						echo "<p>The request message either doesn't exist or has already been destructed.</p>";
+    						echo "<p>The requested message either doesn't exist or has already been ereased.</p>";
     					}
     				}
     				else
