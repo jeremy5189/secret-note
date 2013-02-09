@@ -38,7 +38,7 @@
     		$result = mysql_query($sql, $DB_link);
     		
     		if( $result )
-    			$url = "http://ssinrc.org/secret/?q=$id";
+    			$url = "https://ssinrc.org/secret/?q=$id";
    
     		mysql_close($DB_link);
 	  	}
@@ -85,6 +85,11 @@ $(document).ready( function() {
 		this.select();
 	});
 });
+
+if (location.protocol == "http:") 
+{
+	location.protocol = "https:";
+}
  </script>
 </head>
 
