@@ -150,8 +150,24 @@ text-indent: 0;
 
 #du {
 	margin-top: 30px;
+	margin-bottom: 30px;
 	width: 650px;
 	font-size: 20px
+}
+
+#email_btn {
+    position: relative;
+    bottom: 2px;
+    left: 5px;
+}
+
+#emailBox {
+    width: 220px;
+}
+
+.em {
+    margin-top: 20px;
+    font-size: 16px;
 }
 
 #warn {

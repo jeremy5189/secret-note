@@ -1,9 +1,11 @@
 <?php
-
+    session_start();
 	date_default_timezone_set("Asia/Taipei");
 
 	include('config.php');
 	$act = "normal";
+	
+	$_SESSION['auth_code'] = substr( md5( uniqid()), 0, 10 );
 	
 	if( isset($_POST['flag']) && $_POST['flag'] == 'true' )
 	{
@@ -80,16 +82,53 @@ function getClientIP( $test = "off" )
  var RecaptchaOptions = {
     theme : 'white'
  };
+
 $(document).ready( function() {
-	$('#du').click( function() {
-		this.select();
-	});
+	reg_event();
 });
 
 if (location.protocol == "http:") 
 {
 	location.protocol = "https:";
 }
+
+var validateEmail = function(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+} 
+
+var reg_event = function() {
+    
+    $('#du').click( function() {
+		this.select();
+	});
+    
+    $('#email_btn').click( function() {
+
+        if( validateEmail( $('#emailBox').val() ) ) {
+        
+            $.post( 'add_email.php', { 'email': $('#emailBox').val(), 'msg_id': $('#msg_id').val(), 
+                                        'auth_code': '<?php echo $_SESSION['auth_code']; ?>' }, function(data) {
+
+                if( data == "OK" )  {
+                    $('#email_btn').val("OK");   
+                }
+                else if( data == "ERROR" ) {
+                    $('#email_btn').val("Error"); 
+                }
+                
+            },"html");
+        }
+        else {
+            alert("Not a email address");
+        }
+    });    
+}
+
+var send_mail = function(id, code) {
+    $.post( 'mail.php', {'msg_id': id, 'auth_code': code } );
+}
+
  </script>
 </head>
 
@@ -146,6 +185,10 @@ if (location.protocol == "http:")
 							After that, your message will self destruct in $countdown_sec seconds. 
 							The next visitor won't be able to see it.</p>";
 						echo "<input type=\"text\" id=\"du\" value=\"$url\">";
+						echo "<input type=\"hidden\" id=\"msg_id\" value=\"$id\">";
+						echo "<h2>Notify me when this message gets read</h2>";
+						echo "<input type=\"text\" class=\"em\" id=\"emailBox\">
+						      <input type=\"button\" class=\"em\" id=\"email_btn\" value=\"Save\">";
 					}
 					else
 					{
@@ -174,6 +217,9 @@ if (location.protocol == "http:")
     					{
     						$sql = "UPDATE ".DB_TABLE_NAME." SET `seen` = 1 WHERE `id` = '$target';";
     						$result = mysql_query( $sql, $DB_link );
+    						$code = $_SESSION['auth_code'];
+    						$_SESSION['to_email'] = $data->email;
+    						
     						echo "<script>
     							var t = $countdown_sec;
 
@@ -186,6 +232,7 @@ if (location.protocol == "http:")
 
     							$(document).ready(function(){
     								setTimeout( 'func();', 1000 );
+    								send_mail( '$target', '$code' );
     							});
 
     							</script>";
