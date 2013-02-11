@@ -5,10 +5,12 @@
 	include('config.php');
 	$act = "normal";
 	
+	// 產生 AJAX 驗證碼
 	$_SESSION['auth_code'] = substr( md5( uniqid()), 0, 10 );
 	
 	if( isset($_POST['flag']) && $_POST['flag'] == 'true' )
 	{
+		// Recaptcha 驗證機制
 		require_once('recaptchalib.php');
 		$resp = recaptcha_check_answer ($privatekey,
 	                                    $_SERVER["REMOTE_ADDR"],
@@ -17,12 +19,12 @@
 
 	  	if (!$resp->is_valid) 
 	  	{
-	    	// What happens when the CAPTCHA was entered incorrectly
+	    	// 錯誤的 Captcha
 	   		$error = true;
 	  	} 
 	  	else 
 	  	{
-	    	// Your code here to handle a successful verification
+	    	// 正確的 Captcha
 	    	$act = "show_result";
 	    	$url = null;
 
@@ -34,6 +36,8 @@
     		$time = date("Y-m-d H:i:s");
     		$ip = getClientIP();
     		$id = substr( md5( time()), 0, 6 );
+    		
+    		// 記錄這次的訊息
     		$sql = "INSERT INTO ".DB_TABLE_NAME." (`id`, `time`, `ip`, `message`, `countdown`, `seen`) 
     				VALUES ('$id', '$time', '$ip', '%s', 1, 0);";	
     		$sql = sprintf( $sql, mysql_real_escape_string($_POST['input']));
@@ -47,6 +51,7 @@
 	}
 	else if( isset($_GET['q']) )
 	{
+		// 處理顯示訊息的動作
 		$act = "show_message";
 	}
 
@@ -73,20 +78,23 @@ function getClientIP( $test = "off" )
 <!DOCTYPE>
 <html>
 <head>
-<title>CMS</title>
+<title>CMS - Send messages that will self-destruct after being read</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <meta name="description" content="Classified Message Service, 提供機密訊息閱後銷毀服務" />
 <script type="text/javascript" src="jquery-1.9.0.min.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css" />
 <script type="text/javascript">
- var RecaptchaOptions = {
+
+// 設定 Recaptcha 主題顏色
+var RecaptchaOptions = {
     theme : 'white'
- };
+};
 
 $(document).ready( function() {
 	reg_event();
 });
 
+// 自動導向使用SSL
 if (location.protocol == "http:") 
 {
 	location.protocol = "https:";
@@ -99,10 +107,12 @@ var validateEmail = function(email) {
 
 var reg_event = function() {
     
+    // 網址點擊後全選
     $('#du').click( function() {
 		this.select();
 	});
     
+    // 將email寫入資料庫
     $('#email_btn').click( function() {
 
         if( validateEmail( $('#emailBox').val() ) ) {
@@ -213,13 +223,16 @@ var send_mail = function(id, code) {
 
     				if( $data )
     				{
-    					if( !$data->seen )
+    					if( !$data->seen ) // 檢查這個訊息是否被閱讀過
     					{
+    					    // 標記此訊息為已讀
     						$sql = "UPDATE ".DB_TABLE_NAME." SET `seen` = 1 WHERE `id` = '$target';";
     						$result = mysql_query( $sql, $DB_link );
+    						
     						$code = $_SESSION['auth_code'];
     						$_SESSION['to_email'] = $data->email;
     						
+    						// 印出處理倒數與寄信的 JavaScript
     						echo "<script>
     							var t = $countdown_sec;
 
